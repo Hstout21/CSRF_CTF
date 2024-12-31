@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malicious", "Malicious.csproj", "{A518DD50-62A9-49E7-B734-8D28CB81F1CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A518DD50-62A9-49E7-B734-8D28CB81F1CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A518DD50-62A9-49E7-B734-8D28CB81F1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A518DD50-62A9-49E7-B734-8D28CB81F1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A518DD50-62A9-49E7-B734-8D28CB81F1CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {847F79F6-29E2-471A-9EE1-7AE7EFB92F16}
+	EndGlobalSection
+EndGlobal
