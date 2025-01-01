@@ -1,7 +1,12 @@
 {
   "dependencies": {
+    "@astrojs/node": "^9.0.0",
     "@astrojs/tailwind": "^5.1.4",
     "astro": "^4.16.16",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "csurf": "^1.11.0",
+    "express": "^4.21.2",
     "tailwindcss": "^3.4.17"
   },
   "scripts": {
@@ -9,5 +14,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
-  }
+  },
+  "name": "targetproject",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
