@@ -45,6 +45,17 @@ namespace VulnerableApplication.Backend
             catch { return false; }
         }
 
+        public bool isUserAdmin(string email)
+        {
+            try
+            {
+                string query = "SELECT 1 FROM Users WHERE email = @email AND isAdmin = 1";
+                var parameters = new List<SqlParameter> { new SqlParameter("@email", email), };
+                return RowExists(query, parameters);
+            }
+            catch { return false; }
+        }
+
         public string RemoveDomainFromEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))

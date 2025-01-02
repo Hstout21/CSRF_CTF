@@ -43,7 +43,7 @@ namespace VulnerableApplication.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, backend.RemoveDomainFromEmail(username)),
-                    new Claim(ClaimTypes.Role, "User")
+                    new Claim(ClaimTypes.Role, backend.isUserAdmin(username) ? "Admin" : "User")
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

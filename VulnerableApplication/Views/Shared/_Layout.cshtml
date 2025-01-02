@@ -25,18 +25,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout @User.Identity.Name</a>
-                            </li>
-                        }
-                        else {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
-                            </li>
-                        }
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">
+                            <span>Logout @User.Identity.Name</span>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <button class="btn btn-sm btn-danger" disabled>Admin</button>
+                            }
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                    }
                 </div>
             </div>
         </nav>
