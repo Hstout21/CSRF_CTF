@@ -20,3 +20,27 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.contactDiv {
+    align-content: center;
+    border-radius: 10px;
+    margin-left: 30%;
+    margin-right: 30%;
+    width: 40%;
+}
+
+.loginDiv {
+    align-content: center;
+    border-radius: 10px;
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+}
+
+.formInDiv {
+    width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
