@@ -1,8 +1,49 @@
-﻿@{
+﻿@model IEnumerable<VulnerableApplication.Backend.ForumPost>
+
+@{
     ViewData["Title"] = "Home Page";
+    bool isUserAdmin = User.Identity.IsAuthenticated && User.IsInRole("Admin");
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="forumDiv">
+    <h4 style="text-align:center;font-weight:500;margin-bottom:20px;">VulnerableApplication Inc. Home</h4>
+    @foreach(var i in Model)
+    {
+        <div class="card text-center postDiv">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span>@i.email</span>
+                    @if(i.isAdmin)
+                    {
+                        <button class="btn btn-sm btn-danger" disabled>Admin</button>
+                    }
+                </h5>
+                <p class="card-text">@i.message</p>
+                @if (isUserAdmin || i.email == User.Identity.Name)
+                {
+                    string updateId = $"UpdatePost{i.id}";
+                    <div class="mt-2 d-flex justify-content-center">
+                        <div>
+                            <form asp-action="DeletePost" method="post">
+                                <input name="id" type="hidden" value="@i.id" />
+                                <button type="submit" class="btn btn-danger btn-sm" style="margin-right:2.5px;">Delete</button>
+                            </form>
+                        </div>
+                        <button class="btn btn-primary btn-sm" style="margin-left:2.5px;" type="button" data-bs-toggle="collapse" data-bs-target="#@updateId" aria-expanded="false" aria-controls="@updateId">Update</button>
+                    </div>
+                    <div class="collapse" id="@updateId">
+                        <div class="card card-body mt-2">
+                            <form asp-action="UpdatePost" method="post">
+                                <div class="input-group mb-3">
+                                    <input name="id" type="hidden" value="@i.id" />
+                                    <input name="message" type="text" class="form-control" value="@i.message">
+                                    <button type="submit" class="btn btn-secondary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
 </div>

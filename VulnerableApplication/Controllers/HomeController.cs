@@ -21,12 +21,17 @@ namespace VulnerableApplication.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(backend.GetForumPosts());
         }
 
         public IActionResult Contact()
         {
             return View();
+        }
+
+        public IActionResult Admin()
+        {
+            return User.Identity.IsAuthenticated && User.IsInRole("Admin") ? View() : RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

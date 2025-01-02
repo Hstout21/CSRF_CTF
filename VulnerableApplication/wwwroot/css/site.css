@@ -37,6 +37,19 @@ body {
     width: 50%;
 }
 
+.forumDiv {
+    width: 70%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.postDiv {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .formInDiv {
     width: 90%;
     margin-top: 20px;
