@@ -1,4 +1,4 @@
-namespace Malicious.Models
+namespace VulnerableApplication.Models
 {
     public class ErrorViewModel
     {

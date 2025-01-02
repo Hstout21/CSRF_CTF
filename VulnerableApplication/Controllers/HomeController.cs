@@ -1,8 +1,8 @@
-using Malicious.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using VulnerableApplication.Models;
 
-namespace Malicious.Controllers
+namespace VulnerableApplication.Controllers
 {
     public class HomeController : Controller
     {
