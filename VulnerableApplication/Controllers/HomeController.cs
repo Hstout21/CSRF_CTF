@@ -40,6 +40,24 @@ namespace VulnerableApplication.Controllers
             return View();
         }
 
+        public IActionResult DeletePost(int id)
+        {
+            backend.DeletePost(id);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult UpdatePost(int id, string message)
+        {
+            backend.UpdatePost(id, message);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult CreatePost(string message)
+        {
+            backend.CreatePost(message, User.Identity.Name);
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
@@ -47,7 +65,7 @@ namespace VulnerableApplication.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, backend.RemoveDomainFromEmail(username)),
+                    new Claim(ClaimTypes.Name, username),
                     new Claim(ClaimTypes.Role, backend.isUserAdmin(username) ? "Admin" : "User")
                 };
 

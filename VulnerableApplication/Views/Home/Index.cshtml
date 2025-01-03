@@ -5,8 +5,22 @@
     bool isUserAdmin = User.Identity.IsAuthenticated && User.IsInRole("Admin");
 }
 
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger" style="margin-top:20px;">@ViewBag.ErrorMessage</div>
+}
+
 <div class="forumDiv">
     <h4 style="text-align:center;font-weight:500;margin-bottom:20px;">VulnerableApplication Inc. Home</h4>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="CreatePost" method="post" class="mt-3 mb-3">
+            <div class="input-group mb-3">
+                <input name="message" type="text" class="form-control">
+                <button type="submit" class="btn btn-secondary">Create Post</button>
+            </div>
+        </form>
+    }
     @foreach(var i in Model)
     {
         <div class="card text-center postDiv">

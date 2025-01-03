@@ -26,9 +26,66 @@ namespace VulnerableApplication.Backend
                                         FROM Forum f
                                         JOIN Users u on f.[userId] = u.[id]";
                 return RepoFunctions.RdExecuteQuery<ForumPost>(ConnectionString(), sqlText, null)
-                    .Select(x => new ForumPost() { id = x.id, message = x.message, isAdmin = x.isAdmin, email = RemoveDomainFromEmail(x.email) }).ToList();
+                    .OrderByDescending(x => x.id)
+                    .ToList();
             }
             catch { return []; }
+        }
+
+        public bool DeletePost(int id)
+        {
+            try
+            {
+                string sqlText = @"DELETE FROM Forum WHERE id = @id";
+                var parameters = new List<SqlParameter> { new SqlParameter("@id", id), };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool UpdatePost(int id, string message)
+        {
+            try
+            {
+                string sqlText = @"UPDATE Forum SET message = @message WHERE id = @id";
+                var parameters = new List<SqlParameter> { new SqlParameter("@id", id), new SqlParameter("@message", message), };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool CreatePost(string message, string username)
+        {
+            try
+            {
+                int userId = GetUserId(username);
+                if (userId == -1) { throw new Exception(); }
+
+                string sqlText = @"INSERT Forum (userId, message) VALUES (@userId, @message)";
+                var parameters = new List<SqlParameter> { 
+                    new SqlParameter("@userId", userId), 
+                    new SqlParameter("@message", message), 
+                };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        private int GetUserId(string email)
+        {
+            try
+            {
+                string query = "SELECT id, email, password, isAdmin FROM Users WHERE email = @email";
+                var parameters = new List<SqlParameter>
+                {
+                    new SqlParameter("@email", email),
+                };
+                return RepoFunctions.RdExecuteQuery<User>(ConnectionString(), query, parameters).First().id;
+            }
+            catch { return -1; }
         }
 
         public bool isUser(string email, string password)
@@ -55,15 +112,6 @@ namespace VulnerableApplication.Backend
                 return RepoFunctions.RowExists(ConnectionString(), query, parameters);
             }
             catch { return false; }
-        }
-
-        public string RemoveDomainFromEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return string.Empty;
-
-            int atIndex = email.IndexOf('@');
-            return atIndex > 0 ? email.Substring(0, atIndex) : email;
         }
     }
 }
