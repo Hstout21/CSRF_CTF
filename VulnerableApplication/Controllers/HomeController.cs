@@ -8,37 +8,19 @@ using VulnerableApplication.Models;
 
 namespace VulnerableApplication.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(ILogger<HomeController> _logger, IBackend _backend) : Controller
     {
-        private ILogger<HomeController> logger { get; set; }
-        private IBackend backend { get; set; }
+        private ILogger<HomeController> logger { get; set; } = _logger;
+        private IBackend backend { get; set; } = _backend;
 
-        public HomeController(ILogger<HomeController> _logger, IBackend _backend)
-        {
-            logger = _logger;
-            backend = _backend;
-        }
+        public IActionResult Index() => View(backend.GetForumPosts());
 
-        public IActionResult Index()
-        {
-            return View(backend.GetForumPosts());
-        }
+        public IActionResult Contact() => View();
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
-        public IActionResult Admin()
-        {
-            return User.Identity.IsAuthenticated && User.IsInRole("Admin") ? View(backend.GetUsers()) : RedirectToAction("Index", "Home");
-        }
+        public IActionResult Admin() => User.Identity.IsAuthenticated && User.IsInRole("Admin") ? View(backend.GetUsers()) : RedirectToAction("Index", "Home");
 
         [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        public IActionResult Login() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -127,9 +109,6 @@ namespace VulnerableApplication.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

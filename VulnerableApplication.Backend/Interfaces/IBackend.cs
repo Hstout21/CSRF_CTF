@@ -13,6 +13,7 @@ namespace VulnerableApplication.Backend
         public bool ToggleUserAdmin(int id, bool isCurrentAdmin);
         public bool CreateUser(string email, string password);
         public List<User> GetUsers();
+        public int GetUserId(string email);
         public bool isUser(string email, string password);
         public bool isUserAdmin(string email);
     }

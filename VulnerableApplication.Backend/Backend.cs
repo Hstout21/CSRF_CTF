@@ -4,14 +4,9 @@ using System.Data;
 
 namespace VulnerableApplication.Backend
 {
-    public class Backend : IBackend
+    public class Backend(IConfiguration _config) : IBackend
     {
-        private IConfiguration config { get; set; }
-
-        public Backend(IConfiguration _config)
-        {
-            config = _config;
-        }
+        private IConfiguration config { get; set; } = _config;
 
         private string ConnectionString() => config.GetConnectionString("SoftwareSecurityFinalProject");
 
@@ -135,7 +130,7 @@ namespace VulnerableApplication.Backend
             catch { return []; }
         }
 
-        private int GetUserId(string email)
+        public int GetUserId(string email)
         {
             try
             {
