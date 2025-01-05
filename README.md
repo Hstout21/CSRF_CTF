@@ -1,2 +1,4 @@
 # CSRF_CTF
-Capture The Flag for Cross Site Request Forgery
+
+* CTF for Software Security Final Project.
+* CVE: CVE-2024-56140.
