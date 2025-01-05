@@ -74,6 +74,67 @@ namespace VulnerableApplication.Backend
             catch { return false; }
         }
 
+        public bool DeleteUser(int id)
+        {
+            try
+            {
+                string sqlText = @"DELETE FROM Users WHERE id = @id";
+                var parameters = new List<SqlParameter> { new SqlParameter("@id", id), };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool UpdateUser(int id, string password)
+        {
+            try
+            {
+                string sqlText = @"UPDATE Users SET password = @password WHERE id = @id";
+                var parameters = new List<SqlParameter> { new SqlParameter("@id", id), new SqlParameter("@password", password), };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool ToggleUserAdmin(int id, bool isCurrentAdmin)
+        {
+            try
+            {
+                string sqlText = @"UPDATE Users SET isAdmin = @isAdmin WHERE id = @id";
+                var parameters = new List<SqlParameter> { new SqlParameter("@id", id), new SqlParameter("@isAdmin", !isCurrentAdmin), };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool CreateUser(string email, string password)
+        {
+            try
+            {
+                string sqlText = @"INSERT Users (email, password) VALUES (@email, @password)";
+                var parameters = new List<SqlParameter> {
+                    new SqlParameter("@email", email),
+                    new SqlParameter("@password", password),
+                };
+                RepoFunctions.ExecuteQuery(ConnectionString(), sqlText, parameters);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public List<User> GetUsers()
+        {
+            try
+            {
+                string query = "SELECT id, email, password, isAdmin FROM Users";
+                return RepoFunctions.RdExecuteQuery<User>(ConnectionString(), query, null);
+            }
+            catch { return []; }
+        }
+
         private int GetUserId(string email)
         {
             try

@@ -9,6 +9,7 @@
 
 <div class="loginDiv shadow">
     <form asp-action="Login" method="post" class="formInDiv">
+        @Html.AntiForgeryToken()
         <h4 style="text-align:center;font-weight:500;">Login</h4>
         <div class="form-group mt-2">
             <label for="username">Email</label>

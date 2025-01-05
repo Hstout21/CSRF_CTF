@@ -1,7 +1,71 @@
-﻿@{
+﻿@model IEnumerable<VulnerableApplication.Backend.User>
+
+@{
     ViewData["Title"] = "Admin Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Admin Page</h1>
+<div class="forumDiv">
+
+    <h4 style="text-align:center;font-weight:500;margin-bottom:20px;">Admin Settings</h4>
+
+    <form asp-action="CreateUser" method="post" class="mt-3 mb-3">
+        @Html.AntiForgeryToken()
+        <div class="input-group mb-3">
+            <input name="email" type="email" class="form-control" placeholder="Email">
+            <input name="password" type="password" class="form-control" placeholder="Password">
+            <button type="submit" class="btn btn-secondary">Create User</button>
+        </div>
+    </form>
+
+    @foreach (var i in Model)
+    {
+        <div class="card text-center postDiv">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span>@i.email</span>
+                    @if (i.isAdmin)
+                    {
+                        <button class="btn btn-sm btn-danger" disabled>Admin</button>
+                    }
+                </h5>
+                <p class="card-text">Password: @i.password</p>
+
+                @{ string updateId = $"UpdateUser{i.id}"; }
+                <div class="mt-2 d-flex justify-content-center">
+                    <div>
+                        <form asp-action="DeleteUser" method="post">
+                            @Html.AntiForgeryToken()
+                            <input name="id" type="hidden" value="@i.id" />
+                            <button type="submit" class="btn btn-danger btn-sm" style="margin-right:2.5px;">Delete</button>
+                        </form>
+                    </div>
+
+                    <button class="btn btn-primary btn-sm" style="margin-left:2.5px;margin-right:2.5px;" type="button" data-bs-toggle="collapse" data-bs-target="#@updateId" aria-expanded="false" aria-controls="@updateId">Update Password</button>
+                    
+                    @{ string isAdmin = @i.isAdmin ? "True" : "False"; }
+
+                    <form asp-action="ToggleUserAdmin" method="post">
+                        @Html.AntiForgeryToken()
+                        <input name="id" type="hidden" value="@i.id" />
+                        <input name="isCurrentAdmin" type="hidden" value="@isAdmin" />
+                        @if (i.isAdmin) { <button type="submit" class="btn btn-secondary btn-sm" style="margin-left:2.5px;">Remove Admin</button> }
+                        else { <button type="submit" class="btn btn-secondary btn-sm" style="margin-left:2.5px;">Give Admin</button> }
+                    </form>
+
+                </div>
+                <div class="collapse" id="@updateId">
+                    <div class="card card-body mt-2">
+                        <form asp-action="UpdateUser" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="input-group">
+                                <input name="id" type="hidden" value="@i.id" />
+                                <input name="password" type="text" class="form-control" value="@i.password">
+                                <button type="submit" class="btn btn-secondary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

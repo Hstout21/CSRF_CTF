@@ -31,7 +31,7 @@ namespace VulnerableApplication.Controllers
 
         public IActionResult Admin()
         {
-            return User.Identity.IsAuthenticated && User.IsInRole("Admin") ? View() : RedirectToAction("Index", "Home");
+            return User.Identity.IsAuthenticated && User.IsInRole("Admin") ? View(backend.GetUsers()) : RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -40,18 +40,24 @@ namespace VulnerableApplication.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int id)
         {
             backend.DeletePost(id);
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdatePost(int id, string message)
         {
             backend.UpdatePost(id, message);
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreatePost(string message)
         {
             backend.CreatePost(message, User.Identity.Name);
@@ -59,6 +65,39 @@ namespace VulnerableApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteUser(int id)
+        {
+            backend.DeleteUser(id);
+            return RedirectToAction("Admin", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateUser(int id, string password)
+        {
+            backend.UpdateUser(id, password);
+            return RedirectToAction("Admin", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateUser(string email, string password)
+        {
+            backend.CreateUser(email, password);
+            return RedirectToAction("Admin", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ToggleUserAdmin(int id, bool isCurrentAdmin)
+        {
+            backend.ToggleUserAdmin(id, isCurrentAdmin);
+            return RedirectToAction("Admin", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string username, string password)
         {
             if (backend.isUser(username, password))
