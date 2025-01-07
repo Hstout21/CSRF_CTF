@@ -28,7 +28,9 @@
                         <button class="btn btn-sm btn-danger" disabled>Admin</button>
                     }
                 </h5>
-                <p class="card-text">Password: @i.password</p>
+                <p class="card-text">Password: 
+                    @foreach(var j in i.password) { <span>•</span> }
+                </p>
 
                 @{ string updateId = $"UpdateUser{i.id}"; }
                 <div class="mt-2 d-flex justify-content-center">
@@ -49,7 +51,7 @@
                         <input name="id" type="hidden" value="@i.id" />
                         <input name="isCurrentAdmin" type="hidden" value="@isAdmin" />
                         @if (i.isAdmin) { <button type="submit" class="btn btn-secondary btn-sm" style="margin-left:2.5px;">Remove Admin</button> }
-                        else { <button type="submit" class="btn btn-secondary btn-sm" style="margin-left:2.5px;">Give Admin</button> }
+                        else { <button type="submit" class="btn btn-secondary btn-sm" title="Privilege" style="margin-left:2.5px;">Give Admin</button> }
                     </form>
 
                 </div>

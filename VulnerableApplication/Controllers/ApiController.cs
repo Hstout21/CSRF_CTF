@@ -5,12 +5,12 @@ using VulnerableApplication.Backend;
 using VulnerableApplication.Controllers;
 
 [ApiController]
-[Route("api/admin")]
+[Route("Home/Admin")]
 public class ApiController(IBackend _backend) : Controller
 {
     private IBackend backend { get; set; } = _backend;
 
-    [HttpPost("privilege")]
+    [HttpPost("GiveAdmin")]
     public async Task<IActionResult> AdminPrivilege()
     {
         try
